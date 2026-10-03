@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Sécurisé</title>
+    
+    <style>
+        /* Réinitialiser les marges pour prendre tout l'écran */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Empêche l'apparition de barres de défilement sur la page principale */
+            background-color: #000; /* Fond noir pendant le chargement */
+        }
+
+        /* Le conteneur iframe prendra 100% de la largeur et de la hauteur */
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none; /* Enlève la bordure par défaut */
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- L'iframe qui charge ton site -->
+    <iframe src="https://elyasse-anli-id49848748645984.base44.app/" allowfullscreen></iframe>
+
+    <script>
+        // 1. Désactiver le clic droit (Menu contextuel)
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
+        // 2. Désactiver les raccourcis clavier spécifiques à l'inspection
+        document.onkeydown = function(e) {
+            
+            // Bloquer F12 (Inspecteur)
+            if (e.keyCode === 123) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Bloquer Ctrl + Maj + I (Inspecteur)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 73) { // 73 est le code pour la lettre 'I'
+                e.preventDefault();
+                return false;
+            }
+            
+            // Bloquer Ctrl + Maj + J (Console)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 74) { // 74 est le code pour la lettre 'J'
+                e.preventDefault();
+                return false;
+            }
+
+            // Bloquer Ctrl + Maj + C (Sélectionner un élément pour inspecter)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 67) { // 67 est le code pour la lettre 'C'
+                e.preventDefault();
+                return false;
+            }
+            
+            // Bloquer Ctrl + U (Voir le code source)
+            if (e.ctrlKey && e.keyCode === 85) { // 85 est le code pour la lettre 'U'
+                e.preventDefault();
+                return false;
+            }
+            
+            // Les autres raccourcis (comme Ctrl+C, Ctrl+V, etc.) fonctionneront normalement.
+        };
+
+        // Optionnel : Tentative de bloquer les outils de développement même s'ils sont ouverts d'une autre manière.
+        // Cela utilise un debugger loop pour rendre les devtools inutilisables s'ils sont forcés ouverts.
+        setInterval(function() {
+            var before = new Date().getTime();
+            debugger;
+            var after = new Date().getTime();
+            if (after - before > 100) {
+                // Les devtools sont potentiellement ouverts, mais on ne peut pas fermer la fenêtre de force.
+                // Le debugger en boucle va cependant ralentir l'utilisation de la console.
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
